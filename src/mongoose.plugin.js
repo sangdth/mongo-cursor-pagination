@@ -28,6 +28,7 @@ module.exports = function (schema, options) {
   };
 
   const aggregateFn = function(param) {
+    console.log('mother fucker?');
     if (!this.collection) {
       throw new Error('collection property not found');
     }
@@ -40,7 +41,7 @@ module.exports = function (schema, options) {
   if (options && options.name) {
     schema.statics[options.name] = fn;
   } else {
-    schema.statics.paginate = fn;
+    schema.statics.paginate = aggregateFn;
   }
-  schema.statics.aggregate = aggregateFn;
+  // schema.statics.aggregate = aggregateFn;
 };
