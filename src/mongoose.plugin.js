@@ -1,5 +1,6 @@
 
 const find = require('./find');
+const aggregate = require('./aggregate');
 const _ = require('underscore');
 
 /**
@@ -26,9 +27,20 @@ module.exports = function (schema, options) {
     return find(this.collection, param);
   };
 
+  const aggregateFn = function(param) {
+    if (!this.collection) {
+      throw new Error('collection property not found');
+    }
+
+    param = _.extend({}, param);
+        
+    return aggregate(this.collection, param);
+  };
+
   if (options && options.name) {
     schema.statics[options.name] = fn;
   } else {
     schema.statics.paginate = fn;
   }
+  schema.statics.aggregate = aggregateFn;
 };
